@@ -3,9 +3,9 @@ from datetime import datetime
 import re
 import dateparser as dp
 import usaddress
-from dateutil import parser as dp
 from usaddress import RepeatedLabelError
 import openai
+
 
 # openai.api_key =
 
@@ -26,7 +26,11 @@ def parse_address(row):
         # ...
 
     return row
-
+def remove_duplicates_and_non_alphanumeric(text):
+    words = re.findall(r'\b\w+\b', text)
+    unique_words = list(dict.fromkeys(words))
+    cleaned_text = ' '.join(unique_words)
+    return cleaned_text
 
 def parse_date(row):
     # Append am/pm
@@ -71,7 +75,7 @@ def parse_desc(row):
     count = row[6].find("eTicket")
     if count != -1:
         row[6] = row[6][count + len("eTicket"):]
-
+    return row
 
 # Set your CSV filenames here
 input_csv = 'climate_tech_eventbrite.csv'
@@ -109,17 +113,21 @@ new_column_names[:min_len] = list(column_labels_df.columns[:min_len])
 # Assign the new list of column names to the first DataFrame
 df.columns = new_column_names
 
-# remove garbage text from description
-df = df.apply(parse_desc, axis=1)
+start_end = df.iloc[:, 3].apply(lambda x: (x.split(' - ')[0], x.split(' - ')[1]) if isinstance(x, str) and ' - ' in x else (x, ''))
 
-# Add AM and PM labels to the start time if they are not present
-df = df.apply(parse_date, axis=1)
+df.iloc[:, 3] = [start for start, _ in start_end]
+df.iloc[:, 4] = [end for _, end in start_end]
+
+df.iloc[:, 5] = df.iloc[:, 5].apply(lambda x: remove_duplicates_and_non_alphanumeric(x) if isinstance(x, str) else x)
 
 # Parse the dates
 df = df.apply(parse_date, axis=1)
 
 # Parse addresses
 df = df.apply(parse_address, axis=1)
+
+# remove garbage text from description
+df = df.apply(parse_desc, axis=1)
 
 # Save the modified dataframe to output.csv
 df.to_csv('output - NO AI.csv', index=False)

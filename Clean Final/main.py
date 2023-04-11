@@ -58,8 +58,10 @@ def contains_date(s):
 
     # Search for a date in the input string
     if date_pattern.search(s):
+        print("True")
         return True
     else:
+        print("False")
         return False
 
 def parse_date(row):
@@ -135,7 +137,7 @@ df.iloc[:, 4] = [end for _, end in start_end]
 df.iloc[:, 5] = df.iloc[:, 5].apply(lambda x: remove_duplicates_and_non_alphanumeric(x) if isinstance(x, str) else x)
 
 #remove garbage text from description
-df = df.apply(parse_desc, axis=1)
+#df = df.apply(parse_desc, axis=1)
 
 #Add AM and PM labels to the start time if they are not present
 df = df.apply(append_am_pm, axis=1)
