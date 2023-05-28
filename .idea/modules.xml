@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CTC-Scraper-GPT.iml" filepath="$PROJECT_DIR$/.idea/CTC-Scraper-GPT.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../GPT summarizer/.idea/GPT summarizer.iml" filepath="$PROJECT_DIR$/../GPT summarizer/.idea/GPT summarizer.iml" />
       <module fileurl="file://$PROJECT_DIR$/../openai-cookbook/.idea/openai-cookbook.iml" filepath="$PROJECT_DIR$/../openai-cookbook/.idea/openai-cookbook.iml" />
     </modules>
   </component>

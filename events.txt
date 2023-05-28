@@ -1,0 +1,2 @@
+Event Name	Description	Start Datetime	End Datetime	Location	URL
+Environmental Justice Street Fair	 A street fair focused on environmental justice issues	 2023-08-05 10:00	 2023-08-05 18:00	 Queens, NY	https://www.eventbrite.com/e/environmental-justice-street-fair-tickets-634017111247
